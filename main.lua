@@ -1,0 +1,6 @@
+local composer = require ("composer")
+composer.gotoScene("mainMenu1")
+local music = audio.loadSound("spookz.wav")
+local backgroundmusic = audio.play(music, {channel =1, loops = -1, fadein = 500})
+local thunder = audio.loadSound("thunder.mp3")
+local thunder1 = audio.play(thunder, {channel = 2, loops = -1})

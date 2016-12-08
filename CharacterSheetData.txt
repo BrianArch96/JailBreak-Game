@@ -1,0 +1,83 @@
+----SHEETDATA------------------------------------------------------------------------------------
+local options =
+{
+    --required parameters
+    width = 32,
+    height = 64,
+    numFrames = 24,
+    sheetContentWidth = 192,  -- width of original 1x size of entire sheet
+    sheetContentHeight = 256   -- height of original 1x size of entire sheet
+}
+local sequenceData =
+{
+    {name="walkingdown",	frames = {1, 2, 3, 4, 5, 6 },		 time = 1000, loopCount = 1},  
+	{name="walkingleft",	frames = {7, 8, 9, 10, 11, 12},	     time = 1000, loopCount = 1},
+	{name="walkingright",	frames = {13, 14, 15, 16, 17, 18},	 time = 1000, loopCount = 1},
+	{name="walkingup", 		frames = {19, 20, 21, 22, 23, 24}, 	 time = 1000, loopCount = 1}
+}
+-------------------------------------------------------------------------------------------------
+
+
+---PRISONER--------------------------------------------------------------------------------------
+local prisonerSheet = graphics.newImageSheet("PrisonerWalking.png", options)
+local prisoner = display.newSprite( prisonerSheet, sequenceData )
+	prisoner.x=200 
+	prisoner.y=350
+	prisoner.xScale = 2 	
+	prisoner.yScale = 2
+-------------------------------------------------------------------------------------------------
+
+
+
+
+---GUARD-----------------------------------------------------------------------------------------
+local guardSheet = graphics.newImageSheet("GuardWalks.png", options)
+local guard = display.newSprite( guardSheet, sequenceData )
+	guard.x=150 
+	guard.y=200
+	guard.xScale = 2 	
+	guard.yScale = 2
+-------------------------------------------------------------------------------------------------
+
+
+
+---KEYEVENT--------------------------------------------------------------------------------------
+function onKeyEvent(event)
+		print (event.keyName)
+	if event.keyName == "s" then
+		if event.phase == "down" then
+		prisoner:setSequence("walkingdown")
+		prisoner:play()
+		transition.to( prisoner, { time=800, y = prisoner.y + 50 } )
+		end
+	end
+	
+	if event.keyName == "a" then
+		if event.phase == "down" then
+		prisoner:setSequence("walkingleft")
+		prisoner:play();
+		transition.to( prisoner, { time=800, x = prisoner.x - 50 } )
+		end
+	end
+	
+	if event.keyName == "w" then
+		if event.phase == "down" then
+		prisoner:setSequence("walkingup")
+		prisoner:play();
+		transition.to( prisoner, { time=800, y = prisoner.y - 50 } )
+		end
+	end
+	
+	if event.keyName == "d" then
+		if event.phase == "down" then
+		prisoner:setSequence("walkingright")
+		prisoner:play();
+		transition.to( prisoner, { time=800, x = prisoner.x + 50 } )
+		end
+	end
+end		
+
+------------------------------------------------------------------------------------------
+		
+Runtime:addEventListener("key", onKeyEvent)
+Runtime:addEventListener("prisoner", onKeyEvent)
